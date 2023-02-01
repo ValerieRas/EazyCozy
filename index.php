@@ -1,5 +1,6 @@
 <?php
 include "includes/connect.php";
+include "functions/function.php";
 ?>
 
 
@@ -28,17 +29,17 @@ include "includes/connect.php";
     <!-- MAIN NAVBAR -->
     <nav class="navbar navbar-expand-lg" style="background-color: #fde3e9;">
         <div class="container-fluid">
-           <a class="navbar-brand" href="#">EAZY COZY</a>
+           <a class="navbar-brand" href="index.php">EAZY COZY</a>
            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                <span class="navbar-toggler-icon"></span>
            </button>
            <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                    <li class="nav-item">
-                      <a class="nav-link active" aria-current="page" href="#">Home</a>
+                      <a class="nav-link active" aria-current="page" href="index.php">Home</a>
                     </li>
                     <li class="nav-item">
-                      <a class="nav-link" href="#">Nos produits</a>
+                      <a class="nav-link" href="index.php">Nos produits</a>
                     </li>
                     <li class="nav-item dropdown">
                       <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -97,100 +98,29 @@ include "includes/connect.php";
       <!-- PRODUCT TABLE -->
       <div class="col-md-10">
         <div class="row">
-          <div class="col-md-4 mb-2">
-            <!-- CARD FOR 1 PRODUCT -->
-            <div class="card" style="width: 18rem;">
-              <img src="./img/arche.jpg" class="card-img-top" alt="...">
-              <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                <a href="#" class="btn" style="background-color: #fde3e9;">Ajouter au panier</a>
-                <a href="#" class="btn" style="background-color: #fde3e9;">Détails</a>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-4 mb-2">
-            <!-- CARD FOR 1 PRODUCT -->
-            <div class="card" style="width: 18rem;">
-              <img src="./img/pink.jpg" class="card-img-top" alt="...">
-              <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                <a href="#" class="btn" style="background-color: #fde3e9;">Ajouter au panier</a>
-                <a href="#" class="btn" style="background-color: #fde3e9;">Détails</a>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-4 mb-2">
-            <!-- CARD FOR 1 PRODUCT -->
-            <div class="card" style="width: 18rem;">
-              <img src="./img/sun.jpg" class="card-img-top" alt="...">
-              <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                <a href="#" class="btn" style="background-color: #fde3e9;">Ajouter au panier</a>
-                <a href="#" class="btn" style="background-color: #fde3e9;">Détails</a>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-4 mb-2">
-            <!-- CARD FOR 1 PRODUCT -->
-            <div class="card" style="width: 18rem;">
-              <img src="./img/sun.jpg" class="card-img-top" alt="...">
-              <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                <a href="#" class="btn" style="background-color: #fde3e9;">Ajouter au panier</a>
-                <a href="#" class="btn" style="background-color: #fde3e9;">Détails</a>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-4 mb-2">
-            <!-- CARD FOR 1 PRODUCT -->
-            <div class="card" style="width: 18rem;">
-              <img src="./img/sun.jpg" class="card-img-top" alt="...">
-              <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                <a href="#" class="btn" style="background-color: #fde3e9;">Ajouter au panier</a>
-                <a href="#" class="btn" style="background-color: #fde3e9;">Détails</a>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-4 mb-2">
-            <!-- CARD FOR 1 PRODUCT -->
-            <div class="card" style="width: 18rem;">
-              <img src="./img/sun.jpg" class="card-img-top" alt="...">
-              <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                <a href="#" class="btn" style="background-color: #fde3e9;">Ajouter au panier</a>
-                <a href="#" class="btn" style="background-color: #fde3e9;">Détails</a>
-              </div>
-            </div>
-          </div>
+        <!-- Display CARD FOR PRODUCT From database with function-->
+        <?php
+        Display_product();
+        Display_ONE_cat();
+        Display_ONE_creat();
+        ?>
+        <!-- Fermeture div ROW dans col des produits -->
        </div>
+       <!-- Fermeture div COL des produits dans la page -->
       </div>
 
       <!-- SIDE NAV -->
-      <div class="col-md-2 p-0" style="background-color: #FFE8A8;">
+    <div class="col-md-2 p-0" style="background-color: #FFE8A8;">
         
         <!-- Menu des créateurs -->
         <ul class="navbar-nav me-auto text-center">
           <li class="nav-item bg-light">
             <a href="" class="nav-link"><h4>Nos créateurs</h4></a>
           </li>
-          <!-- Mise à jour avec la base de données -->
+          <!-- Affichage créateur depuis la base de données -->
           <?php
-          $select_createur="SELECT * FROM createur";
-          $result_createur=$BDD->query($select_createur);
-          while($donnees=$result_createur->fetch()){
-          $idcreat=$donnees['idcreat']
+          Display_creat();
           ?>
-          <li class="nav-item">
-            <a href="index.php?createur=<?=$idcreat?>" class="nav-link"><?=$donnees['nomcreat'];?></a>
-          </li>
-          <?php  }  ?>
         </ul>
 
         <!-- Menu des catégories -->
@@ -198,16 +128,10 @@ include "includes/connect.php";
           <li class="nav-item bg-light">
             <a href="" class="nav-link"><h4>Nos catégories</h4></a>
           </li>
+          <!-- Affichage catégorie depuis la base de données -->
           <?php
-          $select_cat="SELECT * FROM categorie";
-          $result_cat=$BDD->query($select_cat);
-          while($donnees=$result_cat->fetch()){
-          $idcat=$donnees['idcat'];
+          Display_cat();
           ?>
-          <li class="nav-item">
-            <a href="index.php?categorie=<?=$idcat?>" class="nav-link"><?=$donnees['nomcat'];?></a>
-          </li>
-          <?php  }  ?>
         </ul>
       </div>
     </div>
