@@ -1,7 +1,8 @@
 <?php
 include "../includes/connect.php";
 
-if (isset($_POST['Ajouter_produit'])){
+// Récupération des informations du formulaire
+if (isset($_POST['ajouter-produit'])){
 
     $prodnom=$_POST['prodnom'];
     $descprod=$_POST['descprod'];
@@ -17,23 +18,24 @@ if (isset($_POST['Ajouter_produit'])){
     $prodimg3=$_FILES['prodimg3']['name'];
 
     // récupérer le tmp des images
-    $tempimg1=$_FILES['prodimg1']['tmp_name'];
-    $tempimg2=$_FILES['prodimg2']['tmp_name'];
-    $tempimg3=$_FILES['prodimg3']['tmp_name'];
+    $tmpimg1=$_FILES['prodimg1']['tmp_name'];
+    $tmpimg2=$_FILES['prodimg2']['tmp_name'];
+    $tmpimg3=$_FILES['prodimg3']['tmp_name'];
 
 
     // Storing product images in the folder
-    move_uploaded_file($tempimg1,"./produit_img/$prodimg1");
-    move_uploaded_file($tempimg2,"./produit_img/$prodimg2");
-    move_uploaded_file($tempimg3,"./produit_img/$prodimg3");
+    move_uploaded_file($tmpimg1,"./produit_img/$prodimg1");
+    move_uploaded_file($tmpimg2,"./produit_img/$prodimg2");
+    move_uploaded_file($tmpimg3,"./produit_img/$prodimg3");
 
     // écriture de la requête d'insertion
-    $sql_prod="INSERT INTO produit (prodnom, descprod,prod_motcle, idcat, 
-    idcreat, img1prod, img2prod, img3prod, prodprix, quantité, date)
-    VALUES ('$prodnom', '$descprod','$prodcle', '$prodcat', '$prodcreat', '$prodimg1', '$prodimg2', '$prodimg3', '$prodprix', '$quantprod',NOW())";
+    $sql_prod="INSERT INTO produit (prodnom, descprod, prod_motcle, idcat, 
+    idcreat, img1prod, img2prod, img3prod, prodprix, quantité, dateprod)
+    VALUES ('$prodnom', '$descprod', '$prodcle', $prodcat, $prodcreat, '$prodimg1', '$prodimg2', '$prodimg3', $prodprix, $quantprod, NOW())";
 
     // préparation de la requête
-    $query=$BDD->prepare($ql_prod);
+    $query=$BDD->prepare($sql_prod);
+
     // execution de la requête
     $result=$query->execute();
 
@@ -51,6 +53,7 @@ if (isset($_POST['Ajouter_produit'])){
 <div class="container">
     <h1 class="text-center mb-5">Ajouter un produit</h1>
 
+<!-- Formulaire d'ajout d'un nouveau produit -->
     <form action="" method="POST" enctype="multipart/form-data">
         <div class="form-outline mb-4 w-50 m-auto">
             <label for="prodnom" class="form-label">Nom du produit</label>
@@ -118,7 +121,7 @@ if (isset($_POST['Ajouter_produit'])){
 
         <!-- valider le formulaire -->
         <div class="form-outline mb-4 w-50 m-auto">
-        <input type="submit" class="p-2 my-3 border-0"  style="background-color: #fde3e9;" value="Ajouter le produit" name="ajouter-produit">
+        <input type="submit" name="ajouter-produit" class="p-2 my-3 border-0"  style="background-color: #fde3e9;" value="Ajouter le produit">
         </div>
     </form>
 </div>

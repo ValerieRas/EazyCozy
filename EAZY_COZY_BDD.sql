@@ -77,3 +77,9 @@ create table createur(
     idcreat INT NOT NULL,
     nomcreat VARCHAR(50)
 );
+
+
+-- insert value in produit table
+INSERT INTO produit 
+(prodnom, descprod, prod_motcle, idcat, idcreat, img1prod, img2prod, img3prod, prodprix, quantité, dateprod)
+VALUES ('$prodnom', '$descprod','$prodcle', $prodcat, $prodcreat, '$prodimg1', '$prodimg2', '$prodimg3', $prodprix, $quantprod,NOW());
