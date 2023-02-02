@@ -100,27 +100,9 @@ include "functions/function.php";
       <div class="col-md-10">
         <div class="row">
         <!-- Display details for one product -->
-        <div class="mb-2">
-        <div class="card">
-            <div class="row">
-                <div class="col-md-4">
-                    <img src="./admin/produit_img/pull.PNG" alt="pull" class="card-img-top">
-                </div>
-                <div class="col-md-4">
-                    <img src="./admin/produit_img/pull 2.PNG" alt="pull" class="card-img-top">
-                </div>
-                <div class="col-md-4">
-                    <img src="./admin/produit_img/pull 3.PNG" alt="pull" class="card-img-top">
-                </div>
-            </div>
-        <div class="card-body text-center">
-          <h5 class="card-title">PULL</h5>
-          <p class="card-text">BLABLABLABLABLABLABLABLABLABLA</p>
-          <a href="#" class="btn" style="background-color: #fde3e9;">Ajouter au panier</a>
-        </div>
-        </div>
-        </div>
-
+        <?php
+        prod_details();
+        ?>
         <!-- Display CARD FOR PRODUCT From database with function-->
         <?php
 

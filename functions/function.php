@@ -26,7 +26,7 @@ if (!isset($_GET['createur'])){
   <div class="col-md-4 mb-2">
     <div class="card"  style="width: 18rem;">
       <img src="./admin/produit_img/<?=$img1prod?>" alt="<?=$prodnom?>" class="card-img-top">
-      <div class="card-body">
+      <div class="card-body text-center">
         <h5 class="card-title"><?=$prodnom?></h5>
         <p class="card-text"><?=$descprod?></p>
         <a href="#" class="btn" style="background-color: #fde3e9;">Ajouter au panier</a>
@@ -71,7 +71,7 @@ function Display_ONE_cat(){
   <div class="col-md-4 mb-2">
     <div class="card" style="width: 18rem;">
       <img src="./admin/produit_img/<?=$img1prod?>" class="card-img-top" alt="<?=$prodnom?>">
-      <div class="card-body">
+      <div class="card-body text-center">
         <h5 class="card-title"><?=$prodnom?></h5>
         <p class="card-text"><?=$descprod?></p>
         <a href="#" class="btn" style="background-color: #fde3e9;">Ajouter au panier</a>
@@ -113,7 +113,7 @@ function Display_ONE_creat(){
   <div class="col-md-4 mb-2">
     <div class="card" style="width: 18rem;">
       <img src="./admin/produit_img/<?=$img1prod?>" class="card-img-top" alt="<?=$prodnom?>">
-      <div class="card-body">
+      <div class="card-body text-center">
         <h5 class="card-title"><?=$prodnom?></h5>
         <p class="card-text"><?=$descprod?></p>
         <a href="#" class="btn" style="background-color: #fde3e9;">Ajouter au panier</a>
@@ -186,7 +186,7 @@ function search_prod(){
     <div class="col-md-4 mb-2">
       <div class="card" style="width: 18rem;">
         <img src="./admin/produit_img/<?=$img1prod?>" class="card-img-top" alt="<?=$prodnom?>">
-        <div class="card-body">
+        <div class="card-body text-center">
           <h5 class="card-title"><?=$prodnom?></h5>
           <p class="card-text"><?=$descprod?></p>
           <a href="#" class="btn" style="background-color: #fde3e9;">Ajouter au panier</a>
@@ -201,6 +201,60 @@ function search_prod(){
 // Fin fonction search_prod
 }
 
-// Fonction plus de détails
+// Fonction plus de détails sur un produit
+function prod_details(){
+ // Condition d'affichage
+if (isset($_GET['idprod'])){
+if (!isset($_GET['createur'])){
+  if (!isset($_GET['categorie'])){
+  $prod_id=$_GET['idprod'];
+  global $BDD;
+  $sql_prod="SELECT * FROM produit WHERE idprod=$prod_id ORDER BY rand() LIMIT 0,6";
+  $result_prod=$BDD->query($sql_prod);
+  while ($donnees=$result_prod->fetch()){
+    $idprod=$donnees['idprod'];
+    $prodnom=$donnees['prodnom'];
+    $descprod=$donnees['descprod'];
+    $idcat=$donnees['idcat'];
+    $idcreat=$donnees['idcreat'];
+    $img1prod=$donnees['img1prod'];
+    $img2prod=$donnees['img2prod'];
+    $img3prod=$donnees['img3prod'];
+    $prodprix=$donnees['prodprix'];
+?>
+<div class="mb-2">
+<div class="card">
+    <div class="row">
+        <div class="col-md-4">
+            <img src="./admin/produit_img/<?=$img1prod?>" alt="$img1prod" class="card-img-top">
+        </div>
+        <div class="col-md-4">
+            <img src="./admin/produit_img/<?=$img2prod?>" alt="$img2prod" class="card-img-top">
+        </div>
+        <div class="col-md-4">
+            <img src="./admin/produit_img/<?=$img3prod?>" alt="$img3prod" class="card-img-top">
+        </div>
+    </div>
+    <div class="row">
+    <div class="card-body text-center">
+      <h5 class="card-title"><?=$prodnom?></h5>
+      <p class="card-text"><?=$descprod?></p>
+      <a href="#" class="btn" style="background-color: #fde3e9;">Ajouter au panier</a>
+    </div>
+    </div>
+  </div>
+</div>
+        
+<?php 
+// Fermeture While loop
+}
+// Fermeture if 'categorie
+}
+// Fermeture if 'createur'
+}
+// Fermeture if 'idprod'
+}
+// Fin fonction prod_details
+}
 
 ?>
