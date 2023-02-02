@@ -24,18 +24,18 @@ if (!isset($_GET['createur'])){
     $prodprix=$donnees['prodprix'];
 ?>
   <div class="col-md-4 mb-2">
-    <div class="card" style="width: 18rem;">
-      <img src="./admin/produit_img/<?=$img1prod?>" class="card-img-top" alt="<?=$prodnom?>">
+    <div class="card"  style="width: 18rem;">
+      <img src="./admin/produit_img/<?=$img1prod?>" alt="<?=$prodnom?>" class="card-img-top">
       <div class="card-body">
         <h5 class="card-title"><?=$prodnom?></h5>
         <p class="card-text"><?=$descprod?></p>
         <a href="#" class="btn" style="background-color: #fde3e9;">Ajouter au panier</a>
-        <a href="#" class="btn" style="background-color: #fde3e9;">Détails</a>
+        <a href="produit_details.php?idprod=<?=$idprod?>" class="btn" style="background-color: #fde3e9;">Détails</a>
       </div>
     </div>
   </div>
 <?php 
-// Fermeture Wile loop
+// Fermeture While loop
 }
 // Fermeture if 'categorie
 }
@@ -75,12 +75,12 @@ function Display_ONE_cat(){
         <h5 class="card-title"><?=$prodnom?></h5>
         <p class="card-text"><?=$descprod?></p>
         <a href="#" class="btn" style="background-color: #fde3e9;">Ajouter au panier</a>
-        <a href="#" class="btn" style="background-color: #fde3e9;">Détails</a>
+        <a href="produit_details.php?idprod=<?=$idprod?>" class="btn" style="background-color: #fde3e9;">Détails</a>
       </div>
     </div>
   </div>
 <?php 
-// Fermeture Wile loop
+// Fermeture While loop
  }
 // Fermeture if categorie
 }
@@ -117,12 +117,12 @@ function Display_ONE_creat(){
         <h5 class="card-title"><?=$prodnom?></h5>
         <p class="card-text"><?=$descprod?></p>
         <a href="#" class="btn" style="background-color: #fde3e9;">Ajouter au panier</a>
-        <a href="#" class="btn" style="background-color: #fde3e9;">Détails</a>
+        <a href="produit_details.php?idprod=<?=$idprod?>" class="btn" style="background-color: #fde3e9;">Détails</a>
       </div>
     </div>
   </div>
 <?php 
-// Fermeture Wile loop
+// Fermeture While loop
  }
 // Fermeture if creat
 }
@@ -159,4 +159,48 @@ function Display_cat(){
 <?php  }
 // Fin fonction Display_cat
 }
+
+// Function for searching products
+function search_prod(){
+
+    global $BDD;
+    if (isset($_GET["search_prod"])){
+    $user_search=$_GET["search_data"];
+    $sql_search="SELECT * FROM produit WHERE prod_motcle LIKE '%$user_search%' ORDER BY rand() LIMIT 0,6";
+    $result_prod=$BDD->query($sql_search);
+    $nbr_search=$result_prod->rowCount();
+    if ($nbr_search<=0){
+      echo "<h2 class='text-center text-danger'>Pas de résultat pour l'instant, Essayer nos autres produits ! :)</h2>";
+    }
+    while ($donnees=$result_prod->fetch()){
+      $idprod=$donnees['idprod'];
+      $prodnom=$donnees['prodnom'];
+      $descprod=$donnees['descprod'];
+      $idcat=$donnees['idcat'];
+      $idcreat=$donnees['idcreat'];
+      $img1prod=$donnees['img1prod'];
+      $img2prod=$donnees['img2prod'];
+      $img3prod=$donnees['img3prod'];
+      $prodprix=$donnees['prodprix'];
+  ?>
+    <div class="col-md-4 mb-2">
+      <div class="card" style="width: 18rem;">
+        <img src="./admin/produit_img/<?=$img1prod?>" class="card-img-top" alt="<?=$prodnom?>">
+        <div class="card-body">
+          <h5 class="card-title"><?=$prodnom?></h5>
+          <p class="card-text"><?=$descprod?></p>
+          <a href="#" class="btn" style="background-color: #fde3e9;">Ajouter au panier</a>
+          <a href="produit_details.php?idprod=<?=$idprod?>" class="btn" style="background-color: #fde3e9;">Détails</a>
+        </div>
+      </div>
+    </div>
+  <?php 
+  // Fermeture While loop
+  }
+}
+// Fin fonction search_prod
+}
+
+// Fonction plus de détails
+
 ?>
