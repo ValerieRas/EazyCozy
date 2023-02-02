@@ -2,7 +2,7 @@
 include "./includes/connect.php";
 
 
-// <Display CARD FOR PRODUCT From database
+// <Display 6 products on index
 function Display_product(){
     
 // Condition d'affichage
@@ -44,6 +44,47 @@ if (!isset($_GET['createur'])){
 // Fermeture fonction Display_product
 }
 
+// Display ALL products
+function Display_All_product(){
+    
+  // Condition d'affichage
+  if (!isset($_GET['createur'])){
+    if (!isset($_GET['categorie'])){
+  
+    global $BDD;
+    $sql_prod="SELECT * FROM produit ORDER BY rand()";
+    $result_prod=$BDD->query($sql_prod);
+    while ($donnees=$result_prod->fetch()){
+      $idprod=$donnees['idprod'];
+      $prodnom=$donnees['prodnom'];
+      $descprod=$donnees['descprod'];
+      $idcat=$donnees['idcat'];
+      $idcreat=$donnees['idcreat'];
+      $img1prod=$donnees['img1prod'];
+      $img2prod=$donnees['img2prod'];
+      $img3prod=$donnees['img3prod'];
+      $prodprix=$donnees['prodprix'];
+  ?>
+    <div class="col-md-4 mb-2">
+      <div class="card"  style="width: 18rem;">
+        <img src="./admin/produit_img/<?=$img1prod?>" alt="<?=$prodnom?>" class="card-img-top">
+        <div class="card-body text-center">
+          <h5 class="card-title"><?=$prodnom?></h5>
+          <p class="card-text"><?=$descprod?></p>
+          <a href="#" class="btn" style="background-color: #fde3e9;">Ajouter au panier</a>
+          <a href="produit_details.php?idprod=<?=$idprod?>" class="btn" style="background-color: #fde3e9;">Détails</a>
+        </div>
+      </div>
+    </div>
+  <?php 
+  // Fermeture While loop
+  }
+  // Fermeture if 'categorie
+  }
+  // Fermeture if 'createur'
+  }
+  // Fermeture fonction Display_all_product
+  }
 
 // Display products of ONE category
 function Display_ONE_cat(){

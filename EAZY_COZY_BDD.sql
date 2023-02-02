@@ -75,7 +75,7 @@ Create table PanierClient(
    prodid INT NOT NULL,
    ipadress VARCHAR(100),
    quant INT,
-   descpan VARCHAR(100)
+   det_panier VARCHAR(100)
 );
 
 

@@ -100,16 +100,21 @@ include "functions/function.php";
         <div class="row">
         <!-- Display CARD FOR PRODUCT From database with function-->
         <?php
-        if (!isset($_GET["search_prod"])){
-        Display_product();
+        if (!isset($_GET["search_prod"])&& !isset($_GET['Display_all'])){
+          Display_product();
         }else{
         search_prod();
+        }
+        if (isset($_GET['Display_all'])){
+        Display_All_product();
         }
         Display_ONE_cat();
         Display_ONE_creat();
         ?>
-        <!-- Fermeture div ROW dans col des produits -->
-       </div>
+        <!-- Affichage de tous les produits -->
+        <a href="index.php?Display_all" class="btn" style="background-color: #fde3e9;" name="display_all">Voir tous les produits</a>
+      <!-- Fermeture div ROW dans col des produits -->
+      </div>
        <!-- Fermeture div COL des produits dans la page -->
       </div>
 
