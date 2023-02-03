@@ -1,8 +1,13 @@
-/* *{
+*{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-} */
+}
+
+.logo{
+    width:7%;
+    height:7%;
+}
 
 .card img{
     width:100%;
@@ -22,7 +27,6 @@
 
 footer {
     width: 100%;
-    position: absolute;
     bottom: 0;
 }
 
