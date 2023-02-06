@@ -55,7 +55,7 @@ include "../includes/connect.php";
         <div class="col-md-2 p-1" style="background-color: #FFE8A8;">
             <ul class="navbar-nav me-auto text-center">
                 <li class="nav-item">
-                    <img src="./img/arche.jpg" alt="ProfilePic" class="logo">
+                    <img src="../img/arche.jpg" alt="ProfilePic" class="logo">
                     <p>Admin name</p>
                 </li>
                 <li class="nav-item">

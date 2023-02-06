@@ -59,7 +59,13 @@ include "functions/function.php";
                       <a class="nav-link" href="#">Nous contacter</a>
                     </li>
                     <li class="nav-item">
-                      <a class="nav-link" href="#"><i class="fa-solid fa-cart-shopping"><sup>1</sup></i></a>
+                      <a class="nav-link" href="panier.php"><i class="fa-solid fa-cart-shopping">
+                      <!-- Affichage du nombre de produit dans le panier -->
+                      <sup>
+                      <?php
+                      nbr_prod_panier();
+                      ?>
+                      </sup></i></a>
                     </li>
                 </ul>
                 <form class="d-flex" action="" method="GET">
@@ -99,7 +105,7 @@ include "functions/function.php";
       <?php
       panier();
       ?>
-      
+
       <!-- PRODUCT TABLE -->
       <!-- Display CARD FOR PRODUCT From database with function-->
       <div class="col-md-10">

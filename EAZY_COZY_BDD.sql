@@ -73,7 +73,8 @@ create table categorie (
 
 Create table PanierClient(
    prodid INT NOT NULL,
-   ipadress VARCHAR(100),
+   idclient INT,
+   prodprix INT,
    quant INT,
    det_panier VARCHAR(100)
 );

@@ -10,8 +10,7 @@ include "functions/function.php";
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Eazy cozy homepage</title>
-
+    <title>Panier</title>
     <!-- Bootstrap Css link -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" 
     integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
@@ -19,9 +18,10 @@ include "functions/function.php";
     <!-- Font awesome link -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" 
     integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-
+    
     <!-- CSS file link -->
     <link rel="stylesheet" href="style.css">
+
 </head>
 <body>
 
@@ -59,13 +59,15 @@ include "functions/function.php";
                       <a class="nav-link" href="#">Nous contacter</a>
                     </li>
                     <li class="nav-item">
-                      <a class="nav-link" href="#"><i class="fa-solid fa-cart-shopping"><sup>1</sup></i></a>
+                      <a class="nav-link" href="panier.php"><i class="fa-solid fa-cart-shopping">
+                      <!-- Affichage du nombre de produit dans le panier -->
+                      <sup>
+                      <?php
+                      nbr_prod_panier();
+                      ?>
+                      </sup></i></a>
                     </li>
                 </ul>
-                <form class="d-flex" action="" method="GET">
-                   <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search_data">
-                   <input type="submit" class="btn btn-outline-dark" value="search" name="search_prod">
-                </form>
             </div>
         </div>
     </nav>
@@ -87,62 +89,84 @@ include "functions/function.php";
 
     <div class="bg-ligt">
       <h3 class="text-center">EAZY COZY</h3>
-      <p class="text-center">The easiest place to find the coziest creations!</p>
+      <p class="text-center">Bienvenue dans votre panier tout doux !</p>
     </div>
     
 
-    <!-- MAIN PAGE -->
+    <!-- MAIN PAGE, affichage des produits du panier-->
 
-    <div class="row">
-
-      <!-- PRODUCT TABLE -->
-      <div class="col-md-10">
+    <div class="container">
         <div class="row">
-        <!-- Display CARD FOR PRODUCT From database with function-->
-        <?php
-        search_prod();
-        Display_ONE_cat();
-        Display_ONE_creat();
-        ?>
-        <!-- Fermeture div ROW dans col des produits -->
-       </div>
-       <!-- Fermeture div COL des produits dans la page -->
-      </div>
-
-      <!-- SIDE NAV -->
-    <div class="col-md-2 p-0" style="background-color: #FFE8A8;">
-        
-        <!-- Menu des créateurs -->
-        <ul class="navbar-nav me-auto text-center">
-          <li class="nav-item bg-light">
-            <a href="" class="nav-link"><h4>Nos créateurs</h4></a>
-          </li>
-          <!-- Affichage créateur depuis la base de données -->
-          <?php
-          Display_creat();
-          ?>
-        </ul>
-
-        <!-- Menu des catégories -->
-        <ul class="navbar-nav me-auto text-center">
-          <li class="nav-item bg-light">
-            <a href="" class="nav-link"><h4>Nos catégories</h4></a>
-          </li>
-          <!-- Affichage catégorie depuis la base de données -->
-          <?php
-          Display_cat();
-          ?>
-        </ul>
-      </div>
+        <form action="" method="POST">
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">Nom du produit</th>
+              <th scope="col">Image</th>
+              <th scope="col">Détails</th>
+              <th scope="col">Prix</th>
+              <th scope="col">Quantité</th>
+              <th scope="col">Options</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Affichage des produits dans le panier de la base de données -->
+            <?php
+            global $BDD;
+            $idCli=1;
+            $prixtotal=0;
+            $sql_select="SELECT * FROM panierclient WHERE idclient=$idCli";
+            $result_pan=$BDD->query($sql_select);
+            while($donnees=$result_pan->fetch()){
+              $prod_dets=$donnees['det_panier'];
+              $idprod=$donnees['prodid'];
+              $sql_prod="SELECT * FROM produit WHERE idprod=$idprod";
+              $result_prod=$BDD->query($sql_prod);
+              while ($donnee=$result_prod->fetch()){
+                $prodnom=$donnee['prodnom'];
+                $imgprod=$donnee['img1prod'];
+                $one_prodprix=$donnee['prodprix'];
+                $tabprix=array($donnee['prodprix']);
+                $prixprod=array_sum($tabprix);
+                $prixtotal+=$prixprod;
+            ?>
+            <tr>
+              <th scope="row"><?=$prodnom?></th>
+              <td>
+                <img src="admin/produit_img/<?=$imgprod?>" alt="<?=$imgprod?>" class="img_panier">
+              </td>
+              <td>
+                <p> <?=$prod_dets?></p>
+              </td>
+              <td><?=$one_prodprix?> €</td>
+              <td>
+                
+                <input type="number" min=1 max=5 value="" name="quant_panier" class="form-input">
+              </td>
+              <td>
+                <a href=""><button class="btn btn-outline-dark">modifier</button></a>
+                <a href=""><button class="btn btn-outline-dark">Supprimer</button></a>
+              </td>
+            </tr>
+            <?php
+              }
+            }
+            ?>
+        <table>
+        <div>
+            <p>Prix total: <strong><?=$prixtotal?> €</strong></p>
+            <a href="index.php"><button class="btn btn-outline-dark mb-3" style="background-color: #fde3e9;">Continuer vos achats</button></a>
+            <a href=""><button class="btn btn-outline-dark mb-3" style="background-color: #fde3e9;">Payer</button></a>
+        </div>
+        </form>
+        </div>
     </div>
 
-
-    </div>
     <!-- Bootstrap JS link  -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" 
     integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
 </body>
-<footer class="p-0 text-center" style="background-color: #fde3e9;">
+<footer class="text-center" style="background-color: #fde3e9;">
     All rights reserved to Valérie RASOLOFOARISON - Simplon Grenoble - 2023
 </footer>
 </html>

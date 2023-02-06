@@ -10,7 +10,7 @@ if (!isset($_GET['createur'])){
   if (!isset($_GET['categorie'])){
 
   global $BDD;
-  $sql_prod="SELECT * FROM produit ORDER BY rand() LIMIT 0,6";
+  $sql_prod="SELECT * FROM produit ORDER BY rand() LIMIT 0,9";
   $result_prod=$BDD->query($sql_prod);
   while ($donnees=$result_prod->fetch()){
     $idprod=$donnees['idprod'];
@@ -23,12 +23,13 @@ if (!isset($_GET['createur'])){
     $img3prod=$donnees['img3prod'];
     $prodprix=$donnees['prodprix'];
 ?>
-  <div class="col-md-4 mb-2">
+  <div class="col-md-4 mb-2 ">
     <div class="card"  style="width: 18rem;">
       <img src="./admin/produit_img/<?=$img1prod?>" alt="<?=$prodnom?>" class="card-img-top">
       <div class="card-body text-center">
         <h5 class="card-title"><?=$prodnom?></h5>
         <p class="card-text"><?=$descprod?></p>
+        <p class="card-text"><?=$prodprix?> €</p>
         <a href="index.php?Ajouter_panier=<?=$idprod?>" class="btn" style="background-color: #fde3e9;">Ajouter au panier</a>
         <a href="produit_details.php?idprod=<?=$idprod?>" class="btn" style="background-color: #fde3e9;">Détails</a>
       </div>
@@ -71,6 +72,7 @@ function Display_All_product(){
         <div class="card-body text-center">
           <h5 class="card-title"><?=$prodnom?></h5>
           <p class="card-text"><?=$descprod?></p>
+          <p class="card-text"><?=$prodprix?> €</p>
           <a href="index.php?Ajouter_panier=<?=$idprod?>" class="btn" style="background-color: #fde3e9;">Ajouter au panier</a>
           <a href="produit_details.php?idprod=<?=$idprod?>" class="btn" style="background-color: #fde3e9;">Détails</a>
         </div>
@@ -115,6 +117,7 @@ function Display_ONE_cat(){
       <div class="card-body text-center">
         <h5 class="card-title"><?=$prodnom?></h5>
         <p class="card-text"><?=$descprod?></p>
+        <p class="card-text"><?=$prodprix?> €</p>
         <a href="index.php?Ajouter_panier=<?=$idprod?>" class="btn" style="background-color: #fde3e9;">Ajouter au panier</a>
         <a href="produit_details.php?idprod=<?=$idprod?>" class="btn" style="background-color: #fde3e9;">Détails</a>
       </div>
@@ -157,6 +160,7 @@ function Display_ONE_creat(){
       <div class="card-body text-center">
         <h5 class="card-title"><?=$prodnom?></h5>
         <p class="card-text"><?=$descprod?></p>
+        <p class="card-text"><?=$prodprix?> €</p>
         <a href="index.php?Ajouter_panier=<?=$idprod?>" class="btn" style="background-color: #fde3e9;">Ajouter au panier</a>
         <a href="produit_details.php?idprod=<?=$idprod?>" class="btn" style="background-color: #fde3e9;">Détails</a>
       </div>
@@ -230,6 +234,7 @@ function search_prod(){
         <div class="card-body text-center">
           <h5 class="card-title"><?=$prodnom?></h5>
           <p class="card-text"><?=$descprod?></p>
+          <p class="card-text"><?=$prodprix?> €</p>
           <a href="index.php?Ajouter_panier=<?=$idprod?>" class="btn" style="background-color: #fde3e9;">Ajouter au panier</a>
           <a href="produit_details.php?idprod=<?=$idprod?>" class="btn" style="background-color: #fde3e9;">Détails</a>
         </div>
@@ -280,6 +285,7 @@ if (!isset($_GET['createur'])){
     <div class="card-body text-center">
       <h5 class="card-title"><?=$prodnom?></h5>
       <p class="card-text"><?=$descprod?></p>
+      <p class="card-text"><?=$prodprix?> €</p>
       <a href="index.php?Ajouter_panier=<?=$idprod?>" class="btn" style="background-color: #fde3e9;">Ajouter au panier</a>
       <a href="index.php" class="btn" style="background-color: #fde3e9;">Continuer vos achats</a>
     </div>
@@ -312,7 +318,7 @@ if(isset($_GET['Ajouter_panier'])){
   $result_pan=$BDD->query($sql_select);
   $nbr_prod=$result_pan->rowCount();
   if ($nbr_prod>0){
-    echo "<script>alert('Ce produit se trouve déj dans votre panier!')</script>";
+    echo "<script>alert('Ce produit se trouve déjà dans votre panier!')</script>";
     echo"<script>window.open('index.php','_self')</script>";  
   }else{
     $sql_insert="INSERT INTO panierclient(prodid,idclient,quant,det_panier)
@@ -322,5 +328,52 @@ if(isset($_GET['Ajouter_panier'])){
   }
   
 }
+// Fin de la fonction panier
 }
-?>
+
+// Fonction pour obtenir le nombre de produits dans le panier
+function nbr_prod_panier(){
+  if(isset($_GET['Ajouter_panier'])){
+  global $BDD;
+
+  // come back later to properly set this with a session variable
+  $idCli=1;
+  $sql_select ="SELECT * FROM panierclient WHERE idclient=$idCli";
+  $result_pan=$BDD->query($sql_select);
+  $nbr_prod=$result_pan->rowCount();
+  }else{
+    global $BDD;
+
+  // come back later to properly set this with a session variable
+  $idCli=1;
+  $sql_select ="SELECT * FROM panierclient WHERE idclient=$idCli";
+  $result_pan=$BDD->query($sql_select);
+  $nbr_prod=$result_pan->rowCount();
+
+  }
+  echo $nbr_prod;
+
+// Fin de la fonction nbr_prod_panier
+}
+
+// Fonction pour le prix total d'un panier
+function prix_total(){
+  global $BDD;
+  $idCli=1;
+  $prixtotal=0;
+  $sql_select="SELECT * FROM panierclient WHERE idclient=$idCli";
+  $result_pan=$BDD->query($sql_select);
+  while($donnees=$result_pan->fetch()){
+    $idprod=$donnees['prodid'];
+    $sql_prod="SELECT * FROM produit WHERE idprod=$idprod";
+    $result_prod=$BDD->query($sql_prod);
+    while ($donnee=$result_prod->fetch()){
+      $prodnom=$donnee['prodnom'];
+      $imgprod=$donnee['img1prod'];
+      $tabprix=array($donnee['prodprix']);
+      $prixprod=array_sum($tabprix);
+      $prixtotal+=$prixprod;
+    }
+  }
+}
+?> 

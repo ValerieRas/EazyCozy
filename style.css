@@ -1,12 +1,12 @@
-*{
+/* *{
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
-}
+    box-sizing: border-box; 
+} */
 
 .logo{
-    width:7%;
-    height:7%;
+    width:100px;
+    height:100px;
 }
 
 .card img{
@@ -23,6 +23,11 @@
 .card-body{
     bottom: 0;
     position: absolute;
+}
+
+.img_panier{
+    width:55px;
+    height:55px
 }
 
 footer {
