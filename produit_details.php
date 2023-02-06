@@ -97,6 +97,11 @@ include "functions/function.php";
     <div class="row">
 
       <!-- PRODUCT TABLE -->
+    <!-- Appele de la fonction panier -->
+    <?php
+      panier();
+    ?>
+
       <div class="col-md-10">
         <div class="row">
         <!-- Display details for one product -->

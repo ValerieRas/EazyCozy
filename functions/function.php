@@ -29,7 +29,7 @@ if (!isset($_GET['createur'])){
       <div class="card-body text-center">
         <h5 class="card-title"><?=$prodnom?></h5>
         <p class="card-text"><?=$descprod?></p>
-        <a href="#" class="btn" style="background-color: #fde3e9;">Ajouter au panier</a>
+        <a href="index.php?Ajouter_panier=<?=$idprod?>" class="btn" style="background-color: #fde3e9;">Ajouter au panier</a>
         <a href="produit_details.php?idprod=<?=$idprod?>" class="btn" style="background-color: #fde3e9;">Détails</a>
       </div>
     </div>
@@ -71,7 +71,7 @@ function Display_All_product(){
         <div class="card-body text-center">
           <h5 class="card-title"><?=$prodnom?></h5>
           <p class="card-text"><?=$descprod?></p>
-          <a href="#" class="btn" style="background-color: #fde3e9;">Ajouter au panier</a>
+          <a href="index.php?Ajouter_panier=<?=$idprod?>" class="btn" style="background-color: #fde3e9;">Ajouter au panier</a>
           <a href="produit_details.php?idprod=<?=$idprod?>" class="btn" style="background-color: #fde3e9;">Détails</a>
         </div>
       </div>
@@ -115,7 +115,7 @@ function Display_ONE_cat(){
       <div class="card-body text-center">
         <h5 class="card-title"><?=$prodnom?></h5>
         <p class="card-text"><?=$descprod?></p>
-        <a href="#" class="btn" style="background-color: #fde3e9;">Ajouter au panier</a>
+        <a href="index.php?Ajouter_panier=<?=$idprod?>" class="btn" style="background-color: #fde3e9;">Ajouter au panier</a>
         <a href="produit_details.php?idprod=<?=$idprod?>" class="btn" style="background-color: #fde3e9;">Détails</a>
       </div>
     </div>
@@ -157,7 +157,7 @@ function Display_ONE_creat(){
       <div class="card-body text-center">
         <h5 class="card-title"><?=$prodnom?></h5>
         <p class="card-text"><?=$descprod?></p>
-        <a href="#" class="btn" style="background-color: #fde3e9;">Ajouter au panier</a>
+        <a href="index.php?Ajouter_panier=<?=$idprod?>" class="btn" style="background-color: #fde3e9;">Ajouter au panier</a>
         <a href="produit_details.php?idprod=<?=$idprod?>" class="btn" style="background-color: #fde3e9;">Détails</a>
       </div>
     </div>
@@ -230,7 +230,7 @@ function search_prod(){
         <div class="card-body text-center">
           <h5 class="card-title"><?=$prodnom?></h5>
           <p class="card-text"><?=$descprod?></p>
-          <a href="#" class="btn" style="background-color: #fde3e9;">Ajouter au panier</a>
+          <a href="index.php?Ajouter_panier=<?=$idprod?>" class="btn" style="background-color: #fde3e9;">Ajouter au panier</a>
           <a href="produit_details.php?idprod=<?=$idprod?>" class="btn" style="background-color: #fde3e9;">Détails</a>
         </div>
       </div>
@@ -280,7 +280,8 @@ if (!isset($_GET['createur'])){
     <div class="card-body text-center">
       <h5 class="card-title"><?=$prodnom?></h5>
       <p class="card-text"><?=$descprod?></p>
-      <a href="#" class="btn" style="background-color: #fde3e9;">Ajouter au panier</a>
+      <a href="index.php?Ajouter_panier=<?=$idprod?>" class="btn" style="background-color: #fde3e9;">Ajouter au panier</a>
+      <a href="index.php" class="btn" style="background-color: #fde3e9;">Continuer vos achats</a>
     </div>
     </div>
   </div>
@@ -298,4 +299,28 @@ if (!isset($_GET['createur'])){
 // Fin fonction prod_details
 }
 
+
+// Fonction pour le panier
+function panier(){
+if(isset($_GET['Ajouter_panier'])){
+  global $BDD;
+
+  // come back later to properly set this with a session variable
+  $idCli=1;
+  $prodid=$_GET['Ajouter_panier'];
+  $sql_select ="SELECT * FROM panierclient WHERE idclient=$idCli and prodid=$prodid";
+  $result_pan=$BDD->query($sql_select);
+  $nbr_prod=$result_pan->rowCount();
+  if ($nbr_prod>0){
+    echo "<script>alert('Ce produit se trouve déj dans votre panier!')</script>";
+    echo"<script>window.open('index.php','_self')</script>";  
+  }else{
+    $sql_insert="INSERT INTO panierclient(prodid,idclient,quant,det_panier)
+    VALUES($prodid,$idCli,1,'nodeats')";
+    $insert_pan=$BDD->query($sql_insert);
+    echo "<script>alert('Un nouveau produit ajouté au panier!')</script>";
+  }
+  
+}
+}
 ?>

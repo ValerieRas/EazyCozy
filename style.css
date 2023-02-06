@@ -16,8 +16,8 @@
     padding-top: 5px;
 }
 .card{
-    object-fit: contain;
-    height: 500px;
+    object-fit:contain;
+    height:500px;
 }
 
 .card-body{
