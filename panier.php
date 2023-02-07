@@ -97,7 +97,11 @@ include "functions/function.php";
 
     <div class="container">
         <div class="row">
-        <form action="" method="POST">
+
+        <!-- Formulaire pour le panier -->
+        <form action="#" method="POST">
+
+        <!--  Table pour le panier client -->
         <table class="table">
           <thead>
             <tr>
@@ -120,6 +124,7 @@ include "functions/function.php";
             while($donnees=$result_pan->fetch()){
               $prod_dets=$donnees['det_panier'];
               $idprod=$donnees['prodid'];
+              $quant=$donnees['quant'];
               $sql_prod="SELECT * FROM produit WHERE idprod=$idprod";
               $result_prod=$BDD->query($sql_prod);
               while ($donnee=$result_prod->fetch()){
@@ -131,34 +136,77 @@ include "functions/function.php";
                 $prixtotal+=$prixprod;
             ?>
             <tr>
-              <th scope="row"><?=$prodnom?></th>
+              <th scope="row">
+                <?=$prodnom?>
+              </th>
               <td>
                 <img src="admin/produit_img/<?=$imgprod?>" alt="<?=$imgprod?>" class="img_panier">
               </td>
               <td>
-                <p> <?=$prod_dets?></p>
-              </td>
-              <td><?=$one_prodprix?> €</td>
-              <td>
-                
-                <input type="number" min=1 max=5 value="" name="quant_panier" class="form-input">
+                <p><?=$prod_dets?></p>
               </td>
               <td>
-                <a href=""><button class="btn btn-outline-dark">modifier</button></a>
-                <a href=""><button class="btn btn-outline-dark">Supprimer</button></a>
+                <?=$one_prodprix?> €
+              </td>
+              <td>
+                <!-- Affichahe de la quantité actuelle -->
+                <input type="number" min=1 max=5 value="<?=$quant?>" name="quant_panier" class="form-input">
+
+              </td>
+              <td>
+                <a href="panier.php?modif_panier=<?=$idprod?>" class="btn btn-outline-dark">Modifier</a>
+                <a href="panier.php?suppr_panier=<?=$idprod?>" class="btn btn-outline-dark">Supprimer</a>
               </td>
             </tr>
             <?php
+            // Fermeture while loop affichage de produits
               }
             }
             ?>
         <table>
         <div>
-            <p>Prix total: <strong><?=$prixtotal?> €</strong></p>
-            <a href="index.php"><button class="btn btn-outline-dark mb-3" style="background-color: #fde3e9;">Continuer vos achats</button></a>
-            <a href=""><button class="btn btn-outline-dark mb-3" style="background-color: #fde3e9;">Payer</button></a>
+            <p>Prix total: <strong><?=$prixtotal*$quant?> €</strong></p>
+            <a href="index.php" class="btn btn-outline-dark mb-3" style="background-color: #fde3e9;" >Continuer vos achats</a>
+            <a href="" class="btn btn-outline-dark mb-3" style="background-color: #fde3e9;">Payer</a>
         </div>
+        <!-- Fermeture formulaire panier -->
         </form>
+
+        <?php
+                
+          //  Modification de la quantité d'articles dans panier
+
+          if(isset($_GET["modif_panier"])){
+
+            $prodid=$_GET["modif_panier"];
+
+            $quantprod=$_POST["quant_panier"];
+            
+            $sql_modif="UPDATE panierclient SET quant=$quantprod WHERE idclient=$idCli AND prodid=$prodid";
+            $modif=$BDD->query($sql_modif);
+            $prixtotal=$quantprod*$prixtotal;
+          
+            if ($modif){
+              echo"window.open('panier.php','_self')";
+            }
+          }
+         ?>
+        <?php
+
+        // Suppression de produits dans panier
+
+        if(isset($_GET["suppr_panier"])){
+          $idCli=1;
+          $prodid=$_GET["suppr_panier"];
+          $sql_supp="DELETE FROM panierclient WHERE prodid=$prodid AND idclient=$idCli";
+         $suppr=$BDD->query($sql_supp);
+        
+          if ($suppr){
+            echo"<script>alert('Un article a été supprimé !')</script>";
+            echo "<script>window.open('panier.php','_self')</script>";
+          }
+        }
+        ?>
         </div>
     </div>
 

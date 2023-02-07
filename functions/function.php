@@ -325,6 +325,7 @@ if(isset($_GET['Ajouter_panier'])){
     VALUES($prodid,$idCli,1,'nodeats')";
     $insert_pan=$BDD->query($sql_insert);
     echo "<script>alert('Un nouveau produit ajouté au panier!')</script>";
+    echo "<script>window.open('index.php','_self')</script>";
   }
   
 }
