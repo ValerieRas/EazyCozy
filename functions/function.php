@@ -364,17 +364,18 @@ function prix_total(){
   $prixtotal=0;
   $sql_select="SELECT * FROM panierclient WHERE idclient=$idCli";
   $result_pan=$BDD->query($sql_select);
-  while($donnees=$result_pan->fetch()){
+  $donnees=$result_pan->fetch();
     $idprod=$donnees['prodid'];
-    $sql_prod="SELECT * FROM produit WHERE idprod=$idprod";
-    $result_prod=$BDD->query($sql_prod);
-    while ($donnee=$result_prod->fetch()){
-      $prodnom=$donnee['prodnom'];
-      $imgprod=$donnee['img1prod'];
-      $tabprix=array($donnee['prodprix']);
+    $quant=$donnees['quant'];
+      // Multiply product price by the quantity in cart
+      $sql_multiply="SELECT produit.prodprix*panierclient.quant as 'multprodprix' FROM produit, panierclient
+      WHERE panierclient.prodid=produit.idprod";
+      $result_mult=$BDD->query($sql_multiply);
+      while($multprod=$result_mult->fetch()){
+      $tabprix=array($multprod['multprodprix']);
       $prixprod=array_sum($tabprix);
-      $prixtotal+=$prixprod;
-    }
-  }
+      $prixtotal+=$prixprod; 
+  } 
+ echo $prixtotal;
 }
 ?> 

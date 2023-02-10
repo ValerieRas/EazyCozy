@@ -54,7 +54,7 @@ include "functions/function.php";
                       </ul>
                     </li>
                     <li class="nav-item">
-                      <a class="nav-link" href="#">S'incrire</a>
+                      <a class="nav-link" href="client/inscription.php">S'incrire</a>
                     </li>
                     <li class="nav-item">
                       <a class="nav-link" href="#">Nous contacter</a>

@@ -53,7 +53,7 @@ include "functions/function.php";
                       </ul>
                     </li>
                     <li class="nav-item">
-                      <a class="nav-link" href="#">S'incrire</a>
+                      <a class="nav-link" href="client/inscription.php">S'incrire</a>
                     </li>
                     <li class="nav-item">
                       <a class="nav-link" href="#">Nous contacter</a>
@@ -97,23 +97,6 @@ include "functions/function.php";
 
     <div class="container">
         <div class="row">
-
-        <!-- Formulaire pour le panier -->
-        <form action="#" method="POST">
-
-        <!--  Table pour le panier client -->
-        <table class="table">
-          <thead>
-            <tr>
-              <th scope="col">Nom du produit</th>
-              <th scope="col">Image</th>
-              <th scope="col">Détails</th>
-              <th scope="col">Prix</th>
-              <th scope="col">Quantité</th>
-              <th scope="col">Options</th>
-            </tr>
-          </thead>
-          <tbody>
             <!-- Affichage des produits dans le panier de la base de données -->
             <?php
             global $BDD;
@@ -121,6 +104,25 @@ include "functions/function.php";
             $prixtotal=0;
             $sql_select="SELECT * FROM panierclient WHERE idclient=$idCli";
             $result_pan=$BDD->query($sql_select);
+            // Vérifier si le panier est vide ou non
+            $result_count=$result_pan->rowCount();
+            if ($result_count>0){
+            ?>
+              <!--  Table pour le panier client -->
+
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">Nom du produit</th>
+                    <th scope="col">Image</th>
+                    <th scope="col">Détails</th>
+                    <th scope="col">Prix</th>
+                    <th scope="col">Quantité</th>
+                    <th scope="col">Options</th>
+                  </tr>
+                </thead>
+                <tbody>
+            <?php
             while($donnees=$result_pan->fetch()){
               $prod_dets=$donnees['det_panier'];
               $idprod=$donnees['prodid'];
@@ -131,9 +133,6 @@ include "functions/function.php";
                 $prodnom=$donnee['prodnom'];
                 $imgprod=$donnee['img1prod'];
                 $one_prodprix=$donnee['prodprix'];
-                $tabprix=array($donnee['prodprix']);
-                $prixprod=array_sum($tabprix);
-                $prixtotal+=$prixprod;
             ?>
             <tr>
               <th scope="row">
@@ -149,12 +148,15 @@ include "functions/function.php";
                 <?=$one_prodprix?> €
               </td>
               <td>
-                <!-- Affichahe de la quantité actuelle -->
-                <input type="number" min=1 max=5 value="<?=$quant?>" name="quant_panier" class="form-input">
 
+                <!-- Affichage de la quantité actuelle -->
+              <!-- Formulaire pour le panier -->
+              <form action="" method="POST">
+                <input type="number" min=1 max=5 name="quant_panier<?=$idprod?>" value="<?=$quant?>">
               </td>
               <td>
-                <a href="panier.php?modif_panier=<?=$idprod?>" class="btn btn-outline-dark">Modifier</a>
+                <input class="btn btn-outline-dark" type="submit" name="modif_panier<?=$idprod?>" value="Modifier">
+              </form>
                 <a href="panier.php?suppr_panier=<?=$idprod?>" class="btn btn-outline-dark">Supprimer</a>
               </td>
             </tr>
@@ -163,33 +165,36 @@ include "functions/function.php";
               }
             }
             ?>
-        <table>
-        <div>
-            <p>Prix total: <strong><?=$prixtotal*$quant?> €</strong></p>
-            <a href="index.php" class="btn btn-outline-dark mb-3" style="background-color: #fde3e9;" >Continuer vos achats</a>
-            <a href="" class="btn btn-outline-dark mb-3" style="background-color: #fde3e9;">Payer</a>
-        </div>
-        <!-- Fermeture formulaire panier -->
-        </form>
-
-        <?php
-                
-          //  Modification de la quantité d'articles dans panier
-
-          if(isset($_GET["modif_panier"])){
-
-            $prodid=$_GET["modif_panier"];
-
-            $quantprod=$_POST["quant_panier"];
-            
-            $sql_modif="UPDATE panierclient SET quant=$quantprod WHERE idclient=$idCli AND prodid=$prodid";
-            $modif=$BDD->query($sql_modif);
-            $prixtotal=$quantprod*$prixtotal;
+          <table>
           
-            if ($modif){
-              echo"window.open('panier.php','_self')";
-            }
+        <div>
+            <p>Prix total: <strong> <?php prix_total() ?> €</strong></p>
+            <a href="index.php" class="btn btn-outline-dark mb-3" style="background-color: #fde3e9;" >Continuer vos achats</a>
+            <a href="client/payer.php" class="btn btn-outline-dark mb-3" style="background-color: #fde3e9;">Payer</a>
+        </div>
+        <?php
+          // Si le panier est vide.
+          }else{
+
+            echo "<h3 class='text-center mb-5 my-5'> Oops, Votre panier est vide !!</h3> <br> <br>
+            <a href='index.php' class='btn btn-outline-dark my-5' style='background-color: #fde3e9;' >Continuer vos achats</a>";
+          
+          // Fermeture if vérification si le panier est vide.
           }
+                
+
+          //  Modification de la quantité d'articles dans panier
+          if(isset($_POST["modif_panier".$idprod])&& isset($_POST["quant_panier".$idprod])){      
+            $idCli=1;            
+            $quantprod=$_POST["quant_panier".$idprod];
+            $sql_modif="UPDATE panierclient SET quant=$quantprod WHERE idclient=$idCli AND prodid=$idprod";
+            $modif=$BDD->query($sql_modif);
+            
+            if ($modif){
+              echo"<script>window.open('panier.php','_self')</script>";
+             }
+            }
+          
          ?>
         <?php
 

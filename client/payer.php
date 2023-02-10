@@ -1,6 +1,5 @@
 <?php
-include "includes/connect.php";
-include "functions/function.php";
+include "../includes/connect.php";
 ?>
 
 
@@ -36,10 +35,10 @@ include "functions/function.php";
            <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                    <li class="nav-item">
-                      <a class="nav-link active" aria-current="page" href="index.php">Home</a>
+                      <a class="nav-link active" aria-current="page" href="../index.php">Home</a>
                     </li>
                     <li class="nav-item">
-                      <a class="nav-link" href="index.php">Nos produits</a>
+                      <a class="nav-link" href="../index.php">Nos produits</a>
                     </li>
                     <li class="nav-item dropdown">
                       <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -53,19 +52,10 @@ include "functions/function.php";
                       </ul>
                     </li>
                     <li class="nav-item">
-                      <a class="nav-link" href="client/inscription.php">S'incrire</a>
+                      <a class="nav-link" href="inscription.php">S'incrire</a>
                     </li>
                     <li class="nav-item">
                       <a class="nav-link" href="#">Nous contacter</a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link" href="panier.php"><i class="fa-solid fa-cart-shopping">
-                      <!-- Affichage du nombre de produit dans le panier -->
-                      <sup>
-                      <?php
-                      nbr_prod_panier();
-                      ?>
-                      </sup></i></a>
                     </li>
                 </ul>
                 <form class="d-flex" action="" method="GET">
@@ -83,80 +73,27 @@ include "functions/function.php";
           <a class="nav-link" href="#">Welcome Guest</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="client/loginclient.php">Se connecter</a>
+          <a class="nav-link" href="#">Se connecter</a>
         </li>
       </ul>
     </nav>
 
-
-    <!-- PAGE TITLE AND MESSAGE -->
-
-    <div class="bg-ligt">
-      <h3 class="text-center">EAZY COZY</h3>
-      <p class="text-center">The easiest place to find the coziest creations!</p>
-    </div>
-    
-
-    <!-- MAIN PAGE -->
-
     <div class="row">
+        <div class="col-md-12">
+        <?php
+        if(!isset($_SESSION['idcli'])){
 
-      <!-- Appele de la fonction panier -->
-      <?php
-      panier();
-      ?>
-
-      <!-- PRODUCT TABLE -->
-      <!-- Display CARD FOR PRODUCT From database with function-->
-      <div class="col-md-10">
-        <div class="row">
-          <?php
-          if (!isset($_GET["search_prod"])&& !isset($_GET['Display_all'])){
-            Display_product();
-          }else{
-            search_prod();
-          }
-          if (isset($_GET['Display_all'])){
-            Display_All_product();
-          }
-          Display_ONE_cat();
-          Display_ONE_creat();
-          ?>
-          <!-- Affichage de tous les produits -->
-          <a href="index.php?Display_all" class="btn my-5" style="background-color: #fde3e9;" name="display_all">Voir tous les produits</a>
-          <!-- Fermeture div ROW dans col des produits -->
+            include("loginclient.php");
+            
+        }else{
+            include('paiementclient.php');
+        }
+        ?>
         </div>
-      <!-- Fermeture div COL des produits dans la page -->
-      </div>
+        <div class="col-md-2">
 
-      <!-- SIDE NAV -->
-    <div class="col-md-2 p-0" style="background-color: #FFE8A8;">
-        
-        <!-- Menu des créateurs -->
-        <ul class="navbar-nav me-auto text-center">
-          <li class="nav-item bg-light">
-            <a href="" class="nav-link"><h4>Nos créateurs</h4></a>
-          </li>
-          <!-- Affichage créateur depuis la base de données -->
-          <?php
-          Display_creat();
-          ?>
-        </ul>
-
-        <!-- Menu des catégories -->
-        <ul class="navbar-nav me-auto text-center">
-          <li class="nav-item bg-light">
-            <a href="" class="nav-link"><h4>Nos catégories</h4></a>
-          </li>
-          <!-- Affichage catégorie depuis la base de données -->
-          <?php
-          Display_cat();
-          ?>
-        </ul>
-      </div>
+        </div>
     </div>
-
-
     </div>
     <!-- Bootstrap JS link  -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" 
