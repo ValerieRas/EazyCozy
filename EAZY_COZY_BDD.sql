@@ -110,6 +110,15 @@ create table attentcom(
 
 )
 
+-- création table paiement
+create table paiement_client(
+    idfact INT NOT NULL,
+    idpaie INT,
+    idcomm INT,
+    prixcom INT,
+    date_paie TIMESTAMP
+)
+
 -- insert value in produit table
 INSERT INTO produit 
 (prodnom, descprod, prod_motcle, idcat, idcreat, img1prod, img2prod, img3prod, prodprix, quantité, dateprod)

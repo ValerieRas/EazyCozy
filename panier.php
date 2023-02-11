@@ -54,9 +54,15 @@ include ("functions/function.php");
                            <li><a class="dropdown-item" href="index.php?createur=6">Kittengrl</a></li>
                       </ul>
                     </li>
-                    <li class="nav-item">
-                      <a class="nav-link" href="client/inscription.php">S'incrire</a>
-                    </li>
+                    <?php
+                    if (isset($_SESSION['idcli'])){
+                      echo "";
+                    }else{
+                      echo "<li class='nav-item'>
+                      <a class='nav-link' href='client/inscription.php'>S'incrire</a>
+                    </li>";
+                    }
+                    ?>
                     <li class="nav-item">
                       <a class="nav-link" href="#">Nous contacter</a>
                     </li>

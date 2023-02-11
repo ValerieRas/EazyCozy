@@ -1,9 +1,10 @@
 <?php
+
 include ('../includes/connect.php');
 
-include ("../functions/function.php");
-
 include ("../functions/clientfunction.php");
+
+include ("../functions/function.php");
 
 $idcli=$_SESSION['idcli'];
 $sql_selct="SELECT * FROM client WHERE idcli=$idcli";
@@ -91,7 +92,7 @@ $clipren=$clivalue['prenom'];
             </li>";
           }else{
             echo "<li class='nav-item'>
-            <a class='nav-link' href='client/clientprofil.php'>Bienvenue sur ton profil!</a>
+            <a class='nav-link' href='clientprofil.php'>Bienvenue sur ton profil!</a>
             </li>";
           }
         
@@ -119,22 +120,20 @@ $clipren=$clivalue['prenom'];
     
 
     <!-- MAIN PAGE -->
-<!-- MENU FONCTIONNALITE -->
+
 <div class="row" >
+  <!-- MENU FONCTIONNALITE -->
         <div class="col-md-2 p-1" style="background-color: #FFE8A8;">
             <ul class="navbar-nav me-auto text-center">
                 <li class="nav-item">
                     <img src="client_img/<?=$cliimg?>" alt="ProfilePic" class="logo">
                     <p class="bold">Bienvenue <?=$clipren?></p>
                 </li>
-                <li class="nav-item">
-                    <button class="btn btn-outline-dark my-2"><a href="clientprofil.php?attente_commandes_client" class="nav-link">Mes commandes en attente</a></button>
+                  <li class="nav-item">
+                    <button class="btn btn-outline-dark my-2"><a href="clientprofil.php?client_commandes" class="nav-link">Mes commandes</a></button>
                 </li>
                 <li class="nav-item">
                     <button class="btn btn-outline-dark my-2"><a href="clientprofil.php?client_compte_modif" class="nav-link"> Modifier le compte</a></button>
-                </li>
-                <li class="nav-item">
-                    <button class="btn btn-outline-dark my-2"><a href="clientprofil.php?client_commandes" class="nav-link">Mes commandes</a></button>
                 </li>
                 <li class="nav-item">
                     <button class="btn btn-outline-dark my-2"><a href="clientprofil.php?client_suppr_compte" class="nav-link">Supprimer le compte</a></button>
@@ -148,6 +147,16 @@ $clipren=$clivalue['prenom'];
         <!-- Affichage des formulaires du menu -->
         <div class="col-md-10 my-5">
             <?php
+              if (isset($_GET['client_commandes'])){
+                include ("client_commande.php");
+              }
+              if (isset($_GET['client_compte_modif'])){
+                include ("modif_profil_client.php");
+              }
+
+              if(isset($_GET['client_suppr_compte'])){
+                include("client_suppr_compte.php");
+              }
 
             ?>
         </div>
