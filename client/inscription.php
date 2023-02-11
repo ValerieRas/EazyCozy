@@ -1,5 +1,7 @@
 <?php
-include "../includes/connect.php";
+session_start();
+
+include ('../includes/connect.php');
 ?>
 
 
@@ -104,6 +106,8 @@ if (isset($_POST['inscription_client'])){
     $telcli=$_POST['telclient'];
     $mailcli=$_POST['emailcli'];
     $motdepassecli=$_POST['motdepasse'];
+    $hash_mdp=password_hash($motdepassecli, PASSWORD_DEFAULT);
+    $motdepasseconfirm=$_POST['motdepasse_confirme'];
 
     // récupérer les images 
     $clientimg=$_FILES['clientimg']['name'];
@@ -115,14 +119,33 @@ if (isset($_POST['inscription_client'])){
     // Storing product images in the folder
     move_uploaded_file($tmpimg,"./client_img/$clientimg");
 
+    // Vérification si client déjà existant
+    $sql_cliselect="SELECT * FROM client WHERE mail='$mailcli'";
+    $result_select=$BDD->query($sql_cliselect);
+    $select_nbr=$result_select->rowCount();
+    if ($select_nbr>0){
+        echo"<script>alert('Un client avec cet email existe déjà!')</script>";
+    }elseif ($motdepassecli!=$motdepasseconfirm) {
+        echo"<script>alert('Mot de passe ne correspond pas. Veuillez confirmer votre mot de passe!')</script>";
+    
+    }else{
 
     // écriture de la requête d'insertion
-    $sql_cli="INSERT INTO client (nom, prenom, dateNaissance, adresse, 
-    tel, mail, motdepasse, imgclient)
-    VALUES ('$clinom', '$clipren', '$datenaissance', '$adrcli', '$telcli', '$mailcli', ' $motdepassecli', '$clientimg')";
-
+    $sql_cli="INSERT INTO client (idcli,nom,prenom,dateNaissance,adresse,tel,mail,motdepasse,imgclient)
+    VALUES ('',:clinom,:clipren,:datenaissance,:adrcli,:telcli,:mailcli,:hash_mdp,:clientimg)";
+    
     // préparation de la requête
     $query=$BDD->prepare($sql_cli);
+
+    // On injecte les valeurs
+    $query->bindvalue(":clinom",$clinom);
+    $query->bindvalue(":clipren",$clipren);
+    $query->bindvalue(":datenaissance",$datenaissance);
+    $query->bindvalue(":adrcli",$adrcli);
+    $query->bindvalue(":telcli",$telcli);
+    $query->bindvalue(":mailcli",$mailcli);
+    $query->bindvalue(":hash_mdp",$hash_mdp);
+    $query->bindvalue(":clientimg",$clientimg);
 
     // execution de la requête
     $result=$query->execute();
@@ -131,7 +154,7 @@ if (isset($_POST['inscription_client'])){
        echo "<script>alert('Vous êtes inscrit!')</script>";
     }else{
         echo "<script>alert('Inscription impossible!')</script>";
-    }
+    }}
 }
 
 

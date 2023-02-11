@@ -1,5 +1,8 @@
 <?php
-   include '../includes/connect.php';
+
+session_start();
+
+include ('../includes/connect.php');
 
    if (isset($_POST['valider-creat'])){
 

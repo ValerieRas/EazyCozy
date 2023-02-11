@@ -1,6 +1,7 @@
 <?php
-include "includes/connect.php";
-include "functions/function.php";
+
+include ('includes/connect.php');
+include ("functions/function.php");
 ?>
 
 
@@ -47,10 +48,12 @@ include "functions/function.php";
                          Nos créateurs
                       </a>
                       <ul class="dropdown-menu">
-                           <li><a class="dropdown-item" href="#">Action</a></li>
-                           <li><a class="dropdown-item" href="#">Another action</a></li>
-                           <li><a class="dropdown-item" href="#">Something else here</a></li>
-                           <li><a class="dropdown-item" href="#">Something else here</a></li>
+                           <li><a class="dropdown-item" href="index.php?createur=1">Noorvana</a></li>
+                           <li><a class="dropdown-item" href="index.php?createur=2">Mahum</a></li>
+                           <li><a class="dropdown-item" href="index.php?createur=3">Molly</a></li>
+                           <li><a class="dropdown-item" href="index.php?createur=4">Beach</a></li>
+                           <li><a class="dropdown-item" href="index.php?createur=5">Kiki</a></li>
+                           <li><a class="dropdown-item" href="index.php?createur=6">Kittengrl</a></li>
                       </ul>
                     </li>
                     <li class="nav-item">
@@ -80,12 +83,27 @@ include "functions/function.php";
     <!-- SECONDARY NAVBAR -->
     <nav class="navbar navbar-expand-lg" style="background-color: #FFE8A8;">
       <ul class="navbar-nav me-auto">
-        <li class="nav-item">
-          <a class="nav-link" href="#">Welcome Guest</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Se connecter</a>
-        </li>
+      <?php        
+        if (!isset($_SESSION['idcli'])){
+          echo "<li class='nav-item'>
+          <a class='nav-link' href='index.php'>Welcome Guest/a>
+          </li>";
+        }else{
+          echo "<li class='nav-item'>
+          <a class='nav-link' href='client/clientprofil.php'>Bienvenue sur ton profil!</a>
+          </li>";
+        }
+        
+        if (!isset($_SESSION['idcli'])){
+          echo "<li class='nav-item'>
+          <a class='nav-link' href='client/loginclient.php'>Se connecter</a>
+          </li>";
+        }else{
+          echo "<li class='nav-item'>
+          <a class='nav-link' href='logout.php'>Se déconnecter</a>
+          </li>";
+        }
+        ?>
       </ul>
     </nav>
 

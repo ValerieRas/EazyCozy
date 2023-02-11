@@ -1,8 +1,3 @@
-<?php
-include "../includes/connect.php";
-
-?>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -24,6 +19,36 @@ include "../includes/connect.php";
 
 </head>
 <body>
-    
+
+<?php
+    $idcli=$_SESSION['idcli'];
+
+?>
+    <div class="container">
+
+        <h2 class="text-center p-5">Choix de Paiements</h2>
+        <div class="row my-5">
+            <div class="col md-4">
+                <a href="http://www.paypal.com"><img src="../img/paypal.PNG" alt=""></a>
+            </div>
+            <div class="col md-4">
+                <a href="../client/cb_form.php"><img src="../img/cb-visa.PNG" alt=""></a>
+            </div>
+            <div class="col md-4">
+                <a class="btn btn my-5" style="background-color: #fde3e9;" href="Commande.php?idcli=<?=$idcli?>">Payer en personne</a>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+<!-- Bootstrap JS link  -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" 
+    integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
 </body>
+<!-- <footer class="text-center" style="background-color: #fde3e9;">
+    All rights reserved to Valérie RASOLOFOARISON - Simplon Grenoble - 2023
+</footer> -->
 </html>

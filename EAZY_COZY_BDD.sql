@@ -34,17 +34,17 @@ CREATE TABLE CLIENT (
 
 
 -- création de la table vendeur
-CREATE TABLE vendeur (
-    idvend INT NOT NULL AUTO_INCREMENT, 
-    nom VARCHAR(50), 
-    prenom VARCHAR (50), 
-    dateNaissance VARCHAR, 
-    adresse VARCHAR(100), 
-    tel INT,
-    mail varchar(50),
-    motdepasse varchar(50),
-    PRIMARY KEY (idvend)
-);
+-- CREATE TABLE vendeur (
+--     idvend INT NOT NULL AUTO_INCREMENT, 
+--     nom VARCHAR(50), 
+--     prenom VARCHAR (50), 
+--     dateNaissance VARCHAR, 
+--     adresse VARCHAR(100), 
+--     tel INT,
+--     mail varchar(50),
+--     motdepasse varchar(50),
+--     PRIMARY KEY (idvend)
+-- );
 
 
 
@@ -71,6 +71,7 @@ create table categorie (
     nomcat VARCHAR(50)
 );
 
+-- création de la table panier
 Create table PanierClient(
    prodid INT NOT NULL,
    idclient INT,
@@ -86,6 +87,28 @@ create table createur(
     nomcreat VARCHAR(50)
 );
 
+-- Création de la table commande
+create table commande(
+    idcomm INT NOT NULL AUTO_INCREMENT,
+    idcli INT,
+    prixcom INT(250),
+    idpaie INT(250),
+    nbrprod INT(250),
+    datcom TIMESTAMP,
+    statucom VARCHAR(100)
+)
+
+-- Création table commande en attente
+
+create table attentcom(
+    idcomm INT,
+    idcli INT,
+    idprod INT(250),
+    idpaie INT(250),
+    quant INT(250),
+    statucom VARCHAR(100)
+
+)
 
 -- insert value in produit table
 INSERT INTO produit 

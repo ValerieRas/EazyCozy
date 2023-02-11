@@ -1,5 +1,7 @@
 <?php
-include "../includes/connect.php";
+session_start();
+
+include ('../includes/connect.php');
 ?>
 
 <!DOCTYPE html>
@@ -32,12 +34,27 @@ include "../includes/connect.php";
             <h2>EAZY COZY ADMIN</h2>
 
             <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a href="" class="nav-link">Welcome Guest</a>
-                </li>
-                <li class="nav-item">
-                    <a href="" class="nav-link">Se déconnecter</a>
-                </li>
+            <?php        
+            if (!isset($_SESSION['idcli'])){
+              echo "<li class='nav-item'>
+              <a class='nav-link' href='#'>Welcome Guest</a>
+              </li>";
+            }else{
+              echo "<li class='nav-item'>
+              <a class='nav-link' href='client/clientprofil.php'>Bienvenue sur ton profil!</a>
+              </li>";
+            }
+        
+            if (!isset($_SESSION['idcli'])){
+              echo "<li class='nav-item'>
+              <a class='nav-link' href='client/loginclient.php'>Se connecter</a>
+              </li>";
+            }else{
+              echo "<li class='nav-item'>
+              <a class='nav-link' href='logout.php'>Se déconnecter</a>
+              </li>";
+            }
+        ?>              
             </ul>
         </div>
      </nav>

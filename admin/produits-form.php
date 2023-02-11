@@ -1,5 +1,7 @@
 <?php
-include "../includes/connect.php";
+session_start();
+
+include ('../includes/connect.php');
 
 // Récupération des informations du formulaire
 if (isset($_POST['ajouter-produit'])){

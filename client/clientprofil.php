@@ -1,7 +1,16 @@
 <?php
-session_start();
-
 include ('../includes/connect.php');
+
+include ("../functions/function.php");
+
+include ("../functions/clientfunction.php");
+
+$idcli=$_SESSION['idcli'];
+$sql_selct="SELECT * FROM client WHERE idcli=$idcli";
+$return=$BDD->query($sql_selct);
+$clivalue=$return->fetch();
+$cliimg=$clivalue['imgclient'];
+$clipren=$clivalue['prenom'];
 ?>
 
 
@@ -11,7 +20,7 @@ include ('../includes/connect.php');
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Eazy cozy homepage</title>
+    <title>profil client</title>
     <!-- Bootstrap Css link -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" 
     integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
@@ -21,7 +30,7 @@ include ('../includes/connect.php');
     integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     
     <!-- CSS file link -->
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../style.css">
 
 </head>
 <body>
@@ -56,16 +65,18 @@ include ('../includes/connect.php');
                       </ul>
                     </li>
                     <li class="nav-item">
-                      <a class="nav-link" href="inscription.php">S'incrire</a>
-                    </li>
-                    <li class="nav-item">
                       <a class="nav-link" href="#">Nous contacter</a>
                     </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="../panier.php"><i class="fa-solid fa-cart-shopping">
+                      <!-- Affichage du nombre de produit dans le panier -->
+                      <sup>
+                      <?php
+                      nbr_prod_panier();
+                      ?>
+                      </sup></i></a>
+                    </li>
                 </ul>
-                <form class="d-flex" action="" method="GET">
-                   <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search_data">
-                   <input type="submit" class="btn btn-outline-dark" value="search" name="search_prod">
-                </form>
             </div>
         </div>
     </nav>
@@ -73,16 +84,16 @@ include ('../includes/connect.php');
     <!-- SECONDARY NAVBAR -->
     <nav class="navbar navbar-expand-lg" style="background-color: #FFE8A8;">
       <ul class="navbar-nav me-auto">
-      <?php        
+        <?php        
         if (!isset($_SESSION['idcli'])){
-          echo "<li class='nav-item'>
-          <a class='nav-link' href='../index.php'>Welcome Guest/a>
-          </li>";
-        }else{
-          echo "<li class='nav-item'>
-          <a class='nav-link' href='client/clientprofil.php'>Bienvenue sur ton profil!</a>
-          </li>";
-        }
+            echo "<li class='nav-item'>
+            <a class='nav-link' href='../index.php'>Welcome Guest/a>
+            </li>";
+          }else{
+            echo "<li class='nav-item'>
+            <a class='nav-link' href='client/clientprofil.php'>Bienvenue sur ton profil!</a>
+            </li>";
+          }
         
         if (!isset($_SESSION['idcli'])){
           echo "<li class='nav-item'>
@@ -94,26 +105,56 @@ include ('../includes/connect.php');
           </li>";
         }
         ?>
+
       </ul>
     </nav>
 
-    <div class="row">
-        <div class="col-md-12">
-        <?php
-        if(!isset($_SESSION['idcli'])){
 
-            include("loginclient.php");
-            
-        }else{
-            include('paiementclient.php');
-        }
-        ?>
+    <!-- PAGE TITLE AND MESSAGE -->
+
+    <div class="bg-ligt">
+      <h3 class="text-center">EAZY COZY</h3>
+      <p class="text-center">The easiest place to find the coziest creations!</p>
+    </div>
+    
+
+    <!-- MAIN PAGE -->
+<!-- MENU FONCTIONNALITE -->
+<div class="row" >
+        <div class="col-md-2 p-1" style="background-color: #FFE8A8;">
+            <ul class="navbar-nav me-auto text-center">
+                <li class="nav-item">
+                    <img src="client_img/<?=$cliimg?>" alt="ProfilePic" class="logo">
+                    <p class="bold">Bienvenue <?=$clipren?></p>
+                </li>
+                <li class="nav-item">
+                    <button class="btn btn-outline-dark my-2"><a href="clientprofil.php?attente_commandes_client" class="nav-link">Mes commandes en attente</a></button>
+                </li>
+                <li class="nav-item">
+                    <button class="btn btn-outline-dark my-2"><a href="clientprofil.php?client_compte_modif" class="nav-link"> Modifier le compte</a></button>
+                </li>
+                <li class="nav-item">
+                    <button class="btn btn-outline-dark my-2"><a href="clientprofil.php?client_commandes" class="nav-link">Mes commandes</a></button>
+                </li>
+                <li class="nav-item">
+                    <button class="btn btn-outline-dark my-2"><a href="clientprofil.php?client_suppr_compte" class="nav-link">Supprimer le compte</a></button>
+                </li>
+                <li class="nav-item">
+                    <button class="btn btn-outline-dark my-2"><a href="../logout.php" class="nav-link"> Se déconnecter</a></button>
+                </li>
+            </ul>
         </div>
-        <div class="col-md-2">
 
+        <!-- Affichage des formulaires du menu -->
+        <div class="col-md-10 my-5">
+            <?php
+
+            ?>
         </div>
     </div>
-    </div>
+  </div>  
+
+
     <!-- Bootstrap JS link  -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" 
     integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>

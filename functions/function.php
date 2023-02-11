@@ -1,6 +1,5 @@
 <?php
-include "./includes/connect.php";
-
+session_start();
 
 // <Display 6 products on index
 function Display_product(){
@@ -306,26 +305,29 @@ if (!isset($_GET['createur'])){
 }
 
 
-// Fonction pour le panier
+// Fonction pour ajouter des produits dans le panier
 function panier(){
 if(isset($_GET['Ajouter_panier'])){
   global $BDD;
-
-  // come back later to properly set this with a session variable
-  $idCli=1;
+  if(isset($_SESSION['idcli'])){
+  $idCli=$_SESSION['idcli'];
   $prodid=$_GET['Ajouter_panier'];
   $sql_select ="SELECT * FROM panierclient WHERE idclient=$idCli and prodid=$prodid";
   $result_pan=$BDD->query($sql_select);
   $nbr_prod=$result_pan->rowCount();
-  if ($nbr_prod>0){
-    echo "<script>alert('Ce produit se trouve déjà dans votre panier!')</script>";
-    echo"<script>window.open('index.php','_self')</script>";  
-  }else{
-    $sql_insert="INSERT INTO panierclient(prodid,idclient,quant,det_panier)
-    VALUES($prodid,$idCli,1,'nodeats')";
-    $insert_pan=$BDD->query($sql_insert);
-    echo "<script>alert('Un nouveau produit ajouté au panier!')</script>";
-    echo "<script>window.open('index.php','_self')</script>";
+    if ($nbr_prod>0){
+      echo "<script>alert('Ce produit se trouve déjà dans votre panier!')</script>";
+      echo"<script>window.open('index.php','_self')</script>";  
+    }else{
+      $idCli=$_SESSION['idcli'];
+      $sql_insert="INSERT INTO panierclient(prodid,idclient,quant,det_panier)
+      VALUES($prodid,$idCli,1,'nodeats')";
+      $insert_pan=$BDD->query($sql_insert);
+      echo "<script>alert('Un nouveau produit ajouté au panier!')</script>";
+      echo "<script>window.open('index.php','_self')</script>";
+  }}else{
+    echo "<script>alert('Vous devez vous connecter')</script>";
+    echo "<script>window.open('client/loginclient.php','_self')</script>";
   }
   
 }
@@ -334,23 +336,18 @@ if(isset($_GET['Ajouter_panier'])){
 
 // Fonction pour obtenir le nombre de produits dans le panier
 function nbr_prod_panier(){
-  if(isset($_GET['Ajouter_panier'])){
-  global $BDD;
 
-  // come back later to properly set this with a session variable
-  $idCli=1;
-  $sql_select ="SELECT * FROM panierclient WHERE idclient=$idCli";
-  $result_pan=$BDD->query($sql_select);
-  $nbr_prod=$result_pan->rowCount();
-  }else{
+  if(isset($_GET['Ajouter_panier']) or isset($_SESSION['idcli'])){
     global $BDD;
 
-  // come back later to properly set this with a session variable
-  $idCli=1;
-  $sql_select ="SELECT * FROM panierclient WHERE idclient=$idCli";
-  $result_pan=$BDD->query($sql_select);
-  $nbr_prod=$result_pan->rowCount();
+    $idCli=$_SESSION['idcli'];
+    $sql_select ="SELECT * FROM panierclient WHERE idclient=$idCli";
+    $result_pan=$BDD->query($sql_select);
+    $nbr_prod=$result_pan->rowCount();
 
+  }else{
+    
+    $nbr_prod=0;
   }
   echo $nbr_prod;
 
@@ -360,7 +357,7 @@ function nbr_prod_panier(){
 // Fonction pour le prix total d'un panier
 function prix_total(){
   global $BDD;
-  $idCli=1;
+  $idCli=$_SESSION['idcli'];
   $prixtotal=0;
   $sql_select="SELECT * FROM panierclient WHERE idclient=$idCli";
   $result_pan=$BDD->query($sql_select);
