@@ -1,6 +1,4 @@
 <?php
-session_start();
-
 include ('../includes/connect.php');
 ?>
 
@@ -37,7 +35,7 @@ include ('../includes/connect.php');
             <?php        
             if (!isset($_SESSION['idcli'])){
               echo "<li class='nav-item'>
-              <a class='nav-link' href='#'>Welcome Guest</a>
+              <a class='nav-link' href='index-admin.php'>Welcome Guest</a>
               </li>";
             }else{
               echo "<li class='nav-item'>
@@ -68,45 +66,48 @@ include ('../includes/connect.php');
     </div>
 
     <!-- MENU FONCTIONNALITE -->
-    <div class="row" >
-        <div class="col-md-2 p-1" style="background-color: #FFE8A8;">
+    <div class="container-fluid p-0">
+        <nav class="navbar navbar-expand-lg" style="background-color: #FFE8A8;">
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto text-center">
                 <li class="nav-item">
                     <img src="../img/arche.jpg" alt="ProfilePic" class="logo">
                     <p>Admin name</p>
                 </li>
                 <li class="nav-item">
-                    <button class="btn btn-outline-dark my-2"><a href="index.php?insert-products" class="nav-link"> Ajouter Produits</a></button>
+                    <button class="btn btn-outline-dark m-2"><a href="index-admin.php?insert-products" class="nav-link"> Ajouter Produits</a></button>
                 </li>
                 <li class="nav-item">
-                    <button class="btn btn-outline-dark my-2"><a href="" class="nav-link"> Consulter Produits</a></button>
+                    <button class="btn btn-outline-dark m-2"><a href="index-admin.php?afficher_produit" class="nav-link"> Consulter Produits</a></button>
                 </li>
                 <li class="nav-item">
-                    <button class="btn btn-outline-dark my-2"><a href="index.php?insert-categories" class="nav-link"> Ajouter Catégories</a></button>
+                    <button class="btn btn-outline-dark m-2"><a href="index-admin.php?insert-categories" class="nav-link"> Ajouter Catégories</a></button>
                 </li>
                 <li class="nav-item">
-                    <button class="btn btn-outline-dark my-2"><a href="" class="nav-link"> Consulter Produits</a></button>
+                    <button class="btn btn-outline-dark m-2"><a href="index-admin.php?afficher_categorie" class="nav-link"> Consulter Catégories</a></button>
                 </li>
                 <li class="nav-item">
-                    <button class="btn btn-outline-dark my-2"><a href="index.php?insert-createurs" class="nav-link"> Ajouter Créateurs</a></button>
+                    <button class="btn btn-outline-dark m-2"><a href="index-admin.php?insert-createurs" class="nav-link"> Ajouter Créateurs</a></button>
                 </li>
                 <li class="nav-item">
-                    <button class="btn btn-outline-dark my-2"><a href="" class="nav-link"> Voir les créateurs</a></button>
+                    <button class="btn btn-outline-dark m-2"><a href="index-admin.php?afficher_createur" class="nav-link"> Voir les créateurs</a></button>
                 </li>
                 <li class="nav-item">
-                    <button class="btn btn-outline-dark my-2"><a href="" class="nav-link"> Commandes</a></button>
+                    <button class="btn btn-outline-dark m-2"><a href="index-admin.php?afficher_commande" class="nav-link"> Commandes</a></button>
                 </li>
                 <li class="nav-item">
-                    <button class="btn btn-outline-dark my-2"><a href="" class="nav-link"> Paiements</a></button>
+                    <button class="btn btn-outline-dark m-2"><a href="index-admin.php?afficher_paiement" class="nav-link"> Paiements</a></button>
                 </li>
                 <li class="nav-item">
-                    <button class="btn btn-outline-dark my-2"><a href="" class="nav-link"> Utilisateurs</a></button>
+                    <button class="btn btn-outline-dark m-2"><a href="index-admin.php?afficher_utilisateur" class="nav-link"> Utilisateurs</a></button>
                 </li>
             </ul>
         </div>
+        </nav>
+    </div>
 
         <!-- Affichage des formulaires du menu -->
-        <div class="col-md-10 my-5">
+        <div class="container-fluid p-0">
             <?php
 
             // Formulaire ajouter catégories   
@@ -123,6 +124,22 @@ include ('../includes/connect.php');
                if (isset($_GET["insert-products"])){
                 include "produits-form.php";
                }
+            
+            // Formulaire Afficher produits
+            if (isset($_GET["afficher_produit"])){
+                include "afficher_produit.php";
+               }
+            
+             // Formulaire Afficher categorie
+            if (isset($_GET["afficher_categorie"])){
+                include "afficher-catégories.php";
+               }
+            
+            // Formulaire Afficher createur
+            if (isset($_GET["afficher_createur"])){
+                include "afficher-createur.php";
+               }
+
             ?>
         </div>
     </div>
