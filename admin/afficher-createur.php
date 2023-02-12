@@ -30,12 +30,27 @@
             <td><?=$creat['nomcreat']?></td>
             <td>
                 <a href='moddif-createur.php?idcreat=<?=$idcreat?>' class='btn btn-outline-dark '>Modifier</a>
-                <a href='suppr-createur.php?idcreat=<?=$idcreat?>' class='btn btn-outline-dark '>Supprimer</a>
+                <a href='suppr-createur.php?idcreat=<?=$idcreat?>' class='btn btn-outline-dark '
+                type="button" data-toggle="modal" data-target="#exampleModal">Supprimer</a>
             </td>
             </tr>
              <?php  }?>
         </tbody>
     </table>
-   
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <h4>êtes-vous sure? cette action est irreversible !!</h4>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal"><a href='index-admin.php?afficher_createur' class='text-light text-decoration-none'>Annuler</a></button>
+        <button type="button" class="btn btn-primary"><a href='suppr-createur.php?idcreat=<?=$idcreat?>'class='text-light text-decoration-none'>Confirmer</a></button>
+      </div>
+    </div>
+  </div>
+</div>
+      
 </body>
 </html>

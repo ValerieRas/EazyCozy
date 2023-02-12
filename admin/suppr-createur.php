@@ -9,7 +9,7 @@ if(isset($_GET['idcreat'])){
     $suppr=$BDD->query($sql_suppr);
     if($suppr){
         echo "<script>alert('Le créateur a été supprimée')</script>";
-        echo "<script>window.open('index-admin.php?afficher-createur','_self')</script>";
+        echo "<script>window.open('index-admin.php?afficher_createur','_self')</script>";
     }
 }
 

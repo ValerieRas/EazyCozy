@@ -123,3 +123,13 @@ create table paiement_client(
 INSERT INTO produit 
 (prodnom, descprod, prod_motcle, idcat, idcreat, img1prod, img2prod, img3prod, prodprix, quantité, dateprod)
 VALUES ('$prodnom', '$descprod','$prodcle', $prodcat, $prodcreat, '$prodimg1', '$prodimg2', '$prodimg3', $prodprix, $quantprod,NOW());
+
+
+Creation table admin
+
+create table admin (
+    idadmin INT NOT NULL, 
+    nomadmin VARCHAR(100), 
+    mailadmin VARCHAR(100), 
+    motdepasse VARCHAR(255)
+)

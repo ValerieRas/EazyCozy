@@ -9,7 +9,7 @@ if(isset($_GET['idcat'])){
     $suppr=$BDD->query($sql_suppr);
     if($suppr){
         echo "<script>alert('La catégorie a été supprimée')</script>";
-        echo "<script>window.open('index-admin.php?afficher-catégories')</script>";
+        echo "<script>window.open('index-admin.php?afficher_categorie','_self')</script>";
     }
 }
 
