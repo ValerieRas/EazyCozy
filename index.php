@@ -1,5 +1,4 @@
 <?php
-
 include ('includes/connect.php');
 include ("functions/function.php");
 ?>
