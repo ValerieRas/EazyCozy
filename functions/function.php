@@ -337,17 +337,17 @@ if(isset($_GET['Ajouter_panier'])){
 // Fonction pour obtenir le nombre de produits dans le panier
 function nbr_prod_panier(){
 
-  if(isset($_GET['Ajouter_panier']) and isset($_SESSION['idcli'])){
+  if(isset($_GET['Ajouter_panier'])){
     global $BDD;
+    if(isset($_SESSION['idcli'])){
     $idCli=$_SESSION['idcli'];
     $sql_select ="SELECT * FROM panierclient WHERE idclient=$idCli";
     $result_pan=$BDD->query($sql_select);
     $nbr_prod=$result_pan->rowCount();
-  }else{
-    $nbr_prod=0;
-  }
-  echo $nbr_prod;
-
+    }
+    }else{$nbr_prod=0;
+    }
+   echo $nbr_prod;
 // Fin de la fonction nbr_prod_panier
 }
 

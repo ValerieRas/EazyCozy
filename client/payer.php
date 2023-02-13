@@ -56,9 +56,6 @@ include ('../includes/connect.php');
                       </ul>
                     </li>
                     <li class="nav-item">
-                      <a class="nav-link" href="inscription.php">S'incrire</a>
-                    </li>
-                    <li class="nav-item">
                       <a class="nav-link" href="#">Nous contacter</a>
                     </li>
                 </ul>
@@ -80,13 +77,13 @@ include ('../includes/connect.php');
           </li>";
         }else{
           echo "<li class='nav-item'>
-          <a class='nav-link' href='client/clientprofil.php'>Bienvenue sur ton profil!</a>
+          <a class='nav-link' href='clientprofil.php'>Bienvenue sur ton profil!</a>
           </li>";
         }
         
         if (!isset($_SESSION['idcli'])){
           echo "<li class='nav-item'>
-          <a class='nav-link' href='client/loginclient.php'>Se connecter</a>
+          <a class='nav-link' href='loginclient.php'>Se connecter</a>
           </li>";
         }else{
           echo "<li class='nav-item'>
