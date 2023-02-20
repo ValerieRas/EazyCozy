@@ -344,8 +344,17 @@ function nbr_prod_panier(){
     $sql_select ="SELECT * FROM panierclient WHERE idclient=$idCli";
     $result_pan=$BDD->query($sql_select);
     $nbr_prod=$result_pan->rowCount();
-    }
     }else{$nbr_prod=0;
+    }
+    }else{
+      global $BDD;
+      if(isset($_SESSION['idcli'])){
+      $idCli=$_SESSION['idcli'];
+      $sql_select ="SELECT * FROM panierclient WHERE idclient=$idCli";
+      $result_pan=$BDD->query($sql_select);
+      $nbr_prod=$result_pan->rowCount();
+      }else{$nbr_prod=0;
+      }
     }
    echo $nbr_prod;
 // Fin de la fonction nbr_prod_panier

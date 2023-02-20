@@ -82,7 +82,7 @@ include("../includes/connect.php");
                     $idcli=$_SESSION['idcli'];
                     $prencli=$_SESSION['prenom'];
                     echo "<script>alert('Vous êtes connecté! :)')</script>"; 
-                    echo "<script>window.open('paimentclient.php', '_self')</script>";
+                    echo "<script>window.open('../panier.php', '_self')</script>";
                 }
             }else{
                 echo "<script>alert('Mot de passe invalide')</script>";

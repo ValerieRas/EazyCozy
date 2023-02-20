@@ -69,7 +69,7 @@ include ("functions/function.php");
                       <a class="nav-link" href="#">Nous contacter</a>
                     </li>
                     <li class="nav-item">
-                    <a class="nav-link" href="#"><i class="fa-solid fa-cart-shopping">
+                    <a class="nav-link" href="panier.php"><i class="fa-solid fa-cart-shopping">
                       <!-- Affichage du nombre de produit dans le panier -->
                       <sup>
                       <?php

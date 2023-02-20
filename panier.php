@@ -185,7 +185,7 @@ include ("functions/function.php");
             </tr>
             <?php
             // Fermeture while loop affichage de produits
-              }
+            }
             }
             ?>
           <table>
@@ -196,6 +196,32 @@ include ("functions/function.php");
             <a href="client/payer.php" class="btn btn-outline-dark mb-3" style="background-color: #fde3e9;">Payer</a>
         </div>
         <?php
+          //  Modification de la quantité d'articles dans panier
+          if(isset($_POST["modif_panier".$idprod])){      
+            $idCli=1;            
+            $quantprod=$_POST["quant_panier".$idprod];
+            $sql_modif="UPDATE panierclient SET quant=$quantprod WHERE idclient=$idCli AND prodid=$idprod";
+            $modif=$BDD->query($sql_modif);
+            
+            if ($modif){
+              echo"<script>window.open('panier.php','_self')</script>";
+             }
+            }
+
+          // Suppression de produits dans panier
+
+          if(isset($_GET["suppr_panier"])){
+            $idCli=1;
+            $prodid=$_GET["suppr_panier"];
+            $sql_supp="DELETE FROM panierclient WHERE prodid=$prodid AND idclient=$idCli";
+           $suppr=$BDD->query($sql_supp);
+          
+            if ($suppr){
+              echo"<script>alert('Un article a été supprimé !')</script>";
+              echo "<script>window.open('panier.php','_self')</script>";
+            }
+          }
+
           // Si le panier est vide.
           }else{
 
@@ -209,38 +235,9 @@ include ("functions/function.php");
           echo "<script>alert('Vous devez vous connecter')</script>";
           echo "<script>window.open('client/loginclient.php','_self')</script>";
         
-
-
-          //  Modification de la quantité d'articles dans panier
-          if(isset($_POST["modif_panier".$idprod])){      
-            $idCli=1;            
-            $quantprod=$_POST["quant_panier".$idprod];
-            $sql_modif="UPDATE panierclient SET quant=$quantprod WHERE idclient=$idCli AND prodid=$idprod";
-            $modif=$BDD->query($sql_modif);
-            
-            if ($modif){
-              echo"<script>window.open('panier.php','_self')</script>";
-             }
-            }
-          }
-         ?>
-        <?php
-
-        // Suppression de produits dans panier
-
-        if(isset($_GET["suppr_panier"])){
-          $idCli=1;
-          $prodid=$_GET["suppr_panier"];
-          $sql_supp="DELETE FROM panierclient WHERE prodid=$prodid AND idclient=$idCli";
-         $suppr=$BDD->query($sql_supp);
-        
-          if ($suppr){
-            echo"<script>alert('Un article a été supprimé !')</script>";
-            echo "<script>window.open('panier.php','_self')</script>";
-          }
         }
-  
-        ?>
+         ?>
+
         </div>
     </div>
 
