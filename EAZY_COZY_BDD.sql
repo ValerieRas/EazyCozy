@@ -10,11 +10,10 @@ create table produit (
     img1prod text,
     img2prod text,
     img3prod text,
-    quantité int
+    quantité int,
     prodprix int, 
     primary key (idprod)
 );
-
 
 
 -- création de la table client
@@ -22,7 +21,7 @@ CREATE TABLE CLIENT (
     idcli INT NOT NULL AUTO_INCREMENT, 
     nom VARCHAR(50), 
     prenom VARCHAR (50), 
-    dateNaissance VARCHAR, 
+    dateNaissance VARCHAR(50), 
     adresse VARCHAR(100), 
     tel INT,
     mail varchar(50),
@@ -34,17 +33,17 @@ CREATE TABLE CLIENT (
 
 
 -- création de la table vendeur
--- CREATE TABLE vendeur (
---     idvend INT NOT NULL AUTO_INCREMENT, 
---     nom VARCHAR(50), 
---     prenom VARCHAR (50), 
---     dateNaissance VARCHAR, 
---     adresse VARCHAR(100), 
---     tel INT,
---     mail varchar(50),
---     motdepasse varchar(50),
---     PRIMARY KEY (idvend)
--- );
+ CREATE TABLE vendeur (
+     idvend INT NOT NULL AUTO_INCREMENT, 
+     nom VARCHAR(50), 
+     prenom VARCHAR (50), 
+     dateNaissance VARCHAR(50), 
+     adresse VARCHAR(100), 
+     tel INT,
+     mail varchar(50),
+     motdepasse varchar(50),
+     PRIMARY KEY (idvend)
+ );
 
 
 
@@ -55,7 +54,7 @@ CREATE TABLE admin (
     idadmin INT NOT NULL AUTO_INCREMENT, 
     nom VARCHAR(50), 
     prenom VARCHAR (50), 
-    dateNaissance VARCHAR, 
+    dateNaissance VARCHAR(50), 
     adresse VARCHAR(100), 
     tel INT,
     mail varchar(50),
@@ -67,7 +66,7 @@ CREATE TABLE admin (
 
 -- creation de la table catégorie
 create table categorie (
-    idcat INT NOT NULL AUTO_INCREMENT=1,
+    idcat INT NOT NULL AUTO_INCREMENT,
     nomcat VARCHAR(50)
 );
 
@@ -96,11 +95,12 @@ create table commande(
     nbrprod INT(250),
     datcom TIMESTAMP,
     statucom VARCHAR(100)
-)
+);
 
 -- Création table commande en attente
 
-create table attentcom(
+create table attentcom
+(
     idcomm INT,
     idcli INT,
     idprod INT(250),
@@ -108,7 +108,7 @@ create table attentcom(
     quant INT(250),
     statucom VARCHAR(100)
 
-)
+);
 
 -- création table paiement
 create table paiement_client(
@@ -117,7 +117,7 @@ create table paiement_client(
     idcomm INT,
     prixcom INT,
     date_paie TIMESTAMP
-)
+);
 
 -- insert value in produit table
 INSERT INTO produit 
@@ -125,11 +125,4 @@ INSERT INTO produit
 VALUES ('$prodnom', '$descprod','$prodcle', $prodcat, $prodcreat, '$prodimg1', '$prodimg2', '$prodimg3', $prodprix, $quantprod,NOW());
 
 
-Creation table admin
 
-create table admin (
-    idadmin INT NOT NULL, 
-    nomadmin VARCHAR(100), 
-    mailadmin VARCHAR(100), 
-    motdepasse VARCHAR(255)
-)
